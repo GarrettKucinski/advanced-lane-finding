@@ -1,4 +1,4 @@
 {
-  "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
+  "python.pythonPath": "/Users/gkucinski/anaconda3/bin/python",
   "python.dataScience.jupyterServerURI": "local"
 }
