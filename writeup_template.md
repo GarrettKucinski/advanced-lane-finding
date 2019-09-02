@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/undistorted7.jpg 'Undistorted'
 [image2]: ./test_images/test1.jpg 'Road Transformed'
 [image3]: ./output_images/binary.jpg 'Binary Example'
-[image4]: ./output_images/warped.jpg 'Warp Example'
+[image4]: ./output_images/fit_verification.png 'Warp Example'
 [image5]: ./output_images/sliding_windows_plot.jpg 'Fit Visual'
 [image6]: ./output_images/lane_on_road.jpg 'Output'
 [video1]: ./project_video.mp4 'Video'
@@ -116,13 +116,13 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+Then I executed a function that uses a sliding window technique to find the path of the pixels likely to be lane lines, using a lane finding class and it's method called `fit_poly()` I fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![alt text][image5]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+By converting the pixels in the images I tested the pipeline on I was able to determine a radius of curvature for each line as it relates to the actual real world dimensions of the road.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
