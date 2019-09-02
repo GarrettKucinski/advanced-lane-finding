@@ -126,7 +126,7 @@ By converting the pixels in the images I tested the pipeline on I was able to de
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`. Here is an example of my result on a test image:
+I implemented in my code in `advanced_lane_finding.ipynb` in the function `lane_finder.draw_lanes_on_road()`. Here is an example of my result on a test image along with the output of the cuvrvature info:
 
 ![alt text][image6]
 
@@ -144,4 +144,16 @@ Here's a [link to my video result](./project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project. Where will your pipeline likely fail? What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
+I took the approach of useing a OpenCV's computer vision functionality to analyze an image of the road and using things like `calibrateCamera()` and `undistort()` was able to create a calibration for the vehicle mounted camera which I could then use to remove any distortion from the resulting image.
+
+This in turn allowed me to use a technique called thresholding whereby I take an absolute soble threshold and apply it to the image. With this technique we are able to clearly and accurately detect which pixels in the image are worth paying attention to. In other words since we know the lane lines are likely to be "vertical" in the image we can adjust our thresholding to pull out and magnify those pixels for further analysis.
+
+After using a sliding window technique on the image we receive from our previous thresholding we apply a second order polynomial to the pixels we've identified as likely to be lane pixels.
+
+Having done this we are now able to draw the area we've identified onto the image of the road and using the inverse matrix we receive from our `getPerspectiveTransform()` function (also a utility provided by OpenCV) we can transform our image of the road with the lane clearly marked back into it's original perspective.
+
+With all of the above in place we have a fully functioning image analysis pipeline for identifying the lanes enabling a self driving car to stay in the correct lane.
+
+Some limitations of the current pipeline are that I do not do any sort of averaging or detecting of the lanes after the inital check. So if we get a bad lane we just keep right on analyzing. Another limitation is that because we don't to any of those things the lane gets a little wobbly from time to time, nothing catastrophic but it would be better to smooth the lane out.
+
+The limitations above will also affect the pipelines ability to deal with more challenging terrain and lighting conditions.
