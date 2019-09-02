@@ -178,12 +178,12 @@ get_s_channel = lambda img: convert_to_hls(img)[:,:,2]
 # ## Transform Perspective to Find Lane Curvature
 
 #%%
-original = cv2.cvtColor(test_images[1][1],cv2.COLOR_BGR2RGB)
+original = cv2.cvtColor(test_images[len(test_images) - 1][1],cv2.COLOR_BGR2RGB)
 undist = cv2.undistort(original, mtx, dist, None, mtx)
 copy = undist.copy()
 
-def draw_line(x,  y): 
-    cv2.line(copy, x, y, [255, 0, 0], 2)
+def draw_line(img, x,  y): 
+    cv2.line(img, x, y, [255, 0, 0], 2)
     
 def display_large_image(img, cmap=None):
     fig, ax = plt.subplots(figsize=(40, 20))
@@ -204,12 +204,13 @@ R2 = (1130, bottom_y)
 R1_x, R1_y = R1
 R2_x, R2_y = R2
 
-draw_line(L1, L2)
-draw_line(L2, R1)
-draw_line(R1, R2)
-draw_line(R2, L1)
+draw_line(copy, L1, L2)
+draw_line(copy, L2, R1)
+draw_line(copy, R1, R2)
+draw_line(copy, R2, L1)
 
 display_large_image(copy)
+
 
 
 #%%
@@ -238,6 +239,10 @@ print(src, dst)
 M = cv2.getPerspectiveTransform(src, dst)
 Minv = cv2.getPerspectiveTransform(dst, src)
 warped = cv2.warpPerspective(undist, M, img_size)
+draw_line(warped, L1, L2)
+draw_line(warped, L2, R1)
+draw_line(warped, R1, R2)
+draw_line(warped, R2, L1)
 
 display_comparison(
     original, 'Original',
