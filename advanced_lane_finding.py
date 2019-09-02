@@ -233,6 +233,7 @@ dst = np.float32([
     [offset, ny]
 ])
 
+print(src, dst)
 
 M = cv2.getPerspectiveTransform(src, dst)
 Minv = cv2.getPerspectiveTransform(dst, src)
